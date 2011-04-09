@@ -85,6 +85,4 @@ def get_mail ():
 	m.logout()
 
 
-# testing only
-get_mail()
 
