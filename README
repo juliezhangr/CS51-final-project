@@ -1,1 +1,8 @@
-our project
+Notes:
+
+.gitignore file holds directories for bulk data, if you change the default directories the
+program uses, make sure to modify this file to ignore them, or else you might dump your inbox
+onto github
+
+get_mail.py can be used to get the contents of your inbox/spam folder for testing. Make sure to
+change the constants for your own email
