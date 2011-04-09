@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 # get_mail.py
 # CS51 final project
 # Implements the get_mail function, which connects 
@@ -6,10 +8,6 @@
 # into two folders, ./inbox and ./spam by default. 
 # This should be useful for testing
 
-
-# NOTE when importing you should use 
-# 'from get_mail import get_mail'
-# to import only the get_mail function
 
 # change these for your own values
 HOST='imap.gmail.com'
@@ -39,20 +37,31 @@ def connect ():
 
 # fetch_from_box takes an connection and a folder string, 
 # and returns an array of messages
-def fetch_from_box (m, box):
+def fetch_from_box (m, box, cmd):
 	try:
 		typ, mail_data = m.select(box)
-		typ, msg_ids = m.search(None, 'ALL')
+		typ, msg_ids = m.search(None, cmd)
 		mail_lst = []
 		msg_ids = msg_ids[0].split(' ')
 		for mid in msg_ids:
-			typ, msg = m.fetch (mid, '(BODY.PEEK[])')
-			mail_lst.append (msg[0]) 
+			if mid != '':
+				typ, msg = m.fetch (mid, '(BODY.PEEK[])')
+				mail_lst.append (msg[0]) 
 		return mail_lst
-	except imaplib.IMAP4.error:
-		print "error"
-		m.logout()
+
+	except imaplib.IMAP4.error as e:
+		print (e.args[0])
 		sys.exit(1)
+# fetch_all returns all mail from a 
+# folder
+
+def fetch_all (m, box):
+	return fetch_from_box (m, box, 'ALL')
+
+# fetches_unread returns all unread mail 
+# from a folder 
+def fetch_unread (m, box):
+	return fetch_from_box (m, box, 'UNSEEN')
 
 # write messages writes emails to
 # a destination
@@ -76,13 +85,13 @@ def get_mail ():
 	m = connect ()
 
 	# downloads spam
-	msgs = fetch_from_box (m, SPAM_SRC)
+	msgs = fetch_unread (m, SPAM_SRC)
 	write_msgs (msgs, SPAM_DEST)
 
-	msgs = fetch_from_box (m, INBOX_SRC)
+	msgs = fetch_all (m, INBOX_SRC)
 	write_msgs (msgs, INBOX_DEST)
 
 	m.logout()
 
-
-
+# uncomment for testing
+# get_mail()
