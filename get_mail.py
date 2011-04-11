@@ -24,13 +24,13 @@ import os
 # connect connects a user to his email client,
 # and returns the connection object
 def connect ():
-    try: 
-        m = imaplib.IMAP4_SSL(HOST, PORT)
-        m.login(USER, getpass.getpass())
-        return m
-    except imaplib.IMAP4.error as e:
-        print (e.args[0] + "\n")
-        sys.exit(1)
+	try: 
+		m = imaplib.IMAP4_SSL(HOST, PORT)
+		m.login(USER, getpass.getpass())
+		return m
+	except imaplib.IMAP4.error as e:
+		print (e.args[0])
+		sys.exit(1)
 
 # fetch_from_box takes an connection and a folder string, 
 # and returns an array of tuples of message ids and messages
