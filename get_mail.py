@@ -32,7 +32,7 @@ def connect ():
 		m.login(USER, getpass.getpass())
 		return m
 	except imaplib.IMAP4.error as e:
-		print (e.args[0] + "\n")
+		print (e.args[0])
 		sys.exit(1)
 
 # fetch_from_box takes an connection and a folder string, 
