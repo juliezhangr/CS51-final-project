@@ -6,27 +6,20 @@
 # which should be useful for testing
 
 
-# change these for your own values
-HOST='imap.gmail.com'
-PORT=993
-USER='jatwood123@gmail.com'
-INBOX_SRC='Inbox'
-SPAM_SRC='[Gmail]/Spam'
-INBOX_DEST='./inbox/'
-SPAM_DEST='./spam/'
 
 
 import imaplib
 import sys
 import getpass
 import os
+import config
 
 # connect connects a user to his email client,
 # and returns the connection object
 def connect ():
 	try: 
-		m = imaplib.IMAP4_SSL(HOST, PORT)
-		m.login(USER, getpass.getpass())
+		m = imaplib.IMAP4_SSL(config.get_net("HOST"), config.get_net("PORT"))
+		m.login(config.get_net("USER"), getpass.getpass())
 		return m
 	except imaplib.IMAP4.error as e:
 		print (e.args[0])
@@ -85,11 +78,11 @@ def get_mail ():
     m = connect ()
 
     # downloads spam
-    msgs = fetch_all (m, SPAM_SRC)
-    _write_msgs (msgs, SPAM_DEST)
+    msgs = fetch_all (m, config.get_net("SPAM_SRC"))
+    _write_msgs (msgs, config.get_net("SPAM_DEST"))
 
-    msgs = fetch_all (m, INBOX_SRC)
-    write_msgs (msgs, INBOX_DEST)
+    msgs = fetch_all (m, config.get_net("INBOX_SRC"))
+    _write_msgs (msgs, config.get_net("INBOX_DEST"))
 
     m.logout()
 
@@ -104,7 +97,7 @@ def get_mail ():
 def write_msg_to_spam (m, mid):
     try:
         # copies the message
-        m.copy (mid, SPAM_SRC)
+        m.copy (mid, config.get_net("SPAM_SRC"))
         m.store (mid, '+FLAGS', '\\Deleted')
     except imaplib.IMAP4.error as e:
         print e.args[0]

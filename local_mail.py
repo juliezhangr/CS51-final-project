@@ -5,10 +5,10 @@
 
 # change these for your values for testing
 
-SPAM_SRC='./spam_src/'
-INBOX_SRC='./inbox_src/'
-INBOX_DEST='./inbox/'
-SPAM_DEST='./spam/'
+SPAM_SRC=''
+INBOX_SRC=''
+INBOX_DEST=''
+SPAM_DEST=''
 
 
 import os

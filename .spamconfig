@@ -1,0 +1,25 @@
+# This is the configuration file
+# Lines starting with '#' are comments
+# values default to system if empty
+# directory names should have '/' or '\' after their names depending
+# on whether they are unix or windows
+# newlines are ignored
+
+LOCALMAIL
+
+SPAM_SRC=./spam_src/
+INBOX_SRC=./inbox_src/
+INBOX_DEST=./inbox/
+SPAM_DEST=./spam/
+
+NET
+
+HOST=imap.gmail.com
+PORT=993
+USER=jatwood123@gmail.com
+INBOX_SRC=Inbox
+SPAM_SRC=[Gmail]/Spam
+INBOX_DEST=./inbox/
+SPAM_DEST=./spam/
+
+
