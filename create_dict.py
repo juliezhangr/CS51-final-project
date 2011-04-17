@@ -4,6 +4,8 @@
 # from the non-spam corpus, and creates a dictionary mapping each token
 # to the probability that an email containing that token is spam
 
+#NBAD and NGOOD are global variables which are the number of emails used in the spam and nonspam corpuses
+
 
 # takes an array of tokens and creates a dictionary mapping 
 # each token to the number of occurrences of that token
@@ -15,17 +17,33 @@ def _helper_dict(tokenlist):
 # uses _helper_dict to create two dicts mapping words to occurrences - one for the  
 # spam tokens and one for the nonspam tokens. Then uses those dicts the main dict using algorithm
 # described by paul graham which maps tokens to probability that an email with that token is spam
-def create_dict(spamlist, nonspamlist)
+def create_dict(spamlist, nonspamlist):
   spam_dict = _helper_dict(spamlist)
-  nonspam_dict = _helper_dictnonspamlist)
+  nonspam_dict = _helper_dict(nonspamlist)
   
+
   # pseudocode:
-  # create new dictionary corpusdict 
-  # for each word which appears in either spam_dict or nonspam_dict:
-      # g = tokencount of that word in the nonspam_Dict times 2
-      # b = lookup the tokencount of that word in the spam_dict
-      # nbad = number of emails used to create spam_dict
-      # ngood = number of emails used to create nonspam_dict
-      # if g + b > 5:
-            # word(key) =  min(1, b/nbad) / (min(1, b/nbad) + min(1, g/ngood))  
-      # return corpusdict
+   
+  corpus_dict = dict(spam_dict.items() + nonspam_dict.items());
+
+  for key in corpus_dict.keys:
+    
+    # g is two times the token count of the key in the nonspam dict 
+    # (or 0 if it's not in the nonspam dict)
+    # we multiply by two to bias against false positives  
+    g = 0
+    if key in nonspam_dict:
+      g = 2 * nonspam_dict[key]   
+
+    # b is two the token count of the key in the spam dict 
+    # (or 0 if it's not in the spam dict)
+    b = 0
+    if key in spam_dict:
+      b = spam_dict[key]   
+ 
+    # calculates the probability that each word is spam
+    # 3 is an arbitrary threshold for now, will increase when corpus grows
+    if g + b > 3:  
+      corpus_dict[key] = max(0.01, min(0.99,(min(1, b/NBAD) / (min(1, g/NGOOD) + min(1, b/NBAD))))) 
+  
+  return corpus_dict
