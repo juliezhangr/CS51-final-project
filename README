@@ -9,4 +9,9 @@ change the constants for your own email
 
 supported options:
     -g, gets the inbox and spam folders from a user's email client, and places them locally in to 
-    the 
+    -f, filtering mode.
+    -t, training mode
+    -e, email, which is a string in format, 'HOST'PORT;USER'
+    -i, input directories, or email folders, in format 'NONSPAM;SPAM'
+    -o, output, 'NONSPAM;SPAM', if -i is on, then local directories,
+    if -e is on, then email folders

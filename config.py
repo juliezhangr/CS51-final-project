@@ -58,4 +58,19 @@ def get_net (s):
     except KeyError:
         print ("No such attribute")
         sys.exit(1)
- 
+
+def get_other(s):
+    try:
+        return _other[s]
+    with KeyError:
+        print ("No such attribute")
+        sys.exit(1)
+
+def set_local(k, v);
+    _local[k] = v
+
+def set_net(k, v):
+    _net[k] = v
+
+def set_other(k,v):
+    _other[k] = v
