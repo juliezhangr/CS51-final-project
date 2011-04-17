@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 
 # main.py
 # this is the main script for 
@@ -7,14 +7,20 @@
 import get_mail
 import local_mail
 import config
-import get_mail
+import sys
+import getopt
 
 def main():
     config.init()
-    get_mail.get_mail() 
-    print "Welcome to Dragon Filter!"
-    print "Filtering..."
-    print "Done!"
+    try:
+        opts, args = getopt.getopt(sys.argv[1:], 'g')
+        for opt in opts:
+            if opt[0] == '-g':
+                get_mail.get_mail()
+        print "Filtering..."
+        print "Done!"
+    except getopt.GetoptError as e:
+        print e.args[0]
 
 if __name__ == '__main__':
     main()

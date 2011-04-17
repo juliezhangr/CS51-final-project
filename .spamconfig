@@ -22,4 +22,4 @@ SPAM_SRC=[Gmail]/Spam
 INBOX_DEST=./inbox/
 SPAM_DEST=./spam/
 
-
+OTHER

@@ -1,5 +1,3 @@
-#!/usr/bin/python
-
 # get_mail.py
 # CS51 final project
 # various email related functions
@@ -13,12 +11,11 @@ import sys
 import getpass
 import os
 import config
-
 # connect connects a user to his email client,
 # and returns the connection object
 def connect ():
 	try: 
-		m = imaplib.IMAP4_SSL(config.get_net("HOST"), config.get_net("PORT"))
+		m = imaplib.IMAP4_SSL(config.get_net("HOST"), int(config.get_net("PORT")))
 		m.login(config.get_net("USER"), getpass.getpass())
 		return m
 	except imaplib.IMAP4.error as e:
@@ -103,5 +100,4 @@ def write_msg_to_spam (m, mid):
         print e.args[0]
         m.logout()
         sys.exit(1)
-
 
